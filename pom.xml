@@ -4,9 +4,9 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.lithium.pip</groupId>
-	<artifactId>lithium-connector-client</artifactId>
+	<artifactId>lithium-connector-client-tomcat</artifactId>
 	<version>1.0.0</version>
-	<packaging>mule</packaging>
+	<packaging>war</packaging>
 	<name>Mule Cloud Client</name>
 
 	<properties>
