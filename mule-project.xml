@@ -3,4 +3,5 @@
     <name>lithium-connector-user</name>
     <description></description>
     <muleExtension name="Twitter" qualifier="org.mule.tooling.ui.contribution.twitter.3.5.0"/>
+    <muleExtension name="Lithium" qualifier="org.mule.tooling.ui.contribution.Lithium"/>
 </mule-project>

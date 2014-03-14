@@ -6,7 +6,7 @@
 	<groupId>com.lithium.pip</groupId>
 	<artifactId>lithium-connector-client-tomcat</artifactId>
 	<version>1.0.0</version>
-	<packaging>war</packaging>
+	<packaging>mule</packaging>
 	<name>Mule Cloud Client</name>
 
 	<properties>
@@ -404,6 +404,17 @@
 			<version>${mule.version}</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.9.13</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>2.3.2</version>
+		</dependency>
+
 	</dependencies>
 
 	<repositories>
