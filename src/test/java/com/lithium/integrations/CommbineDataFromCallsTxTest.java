@@ -6,6 +6,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.lithium.integrations.transformations.CombineDataFromCallsTx;
+
 public class CommbineDataFromCallsTxTest {
 	CombineDataFromCallsTx commbineDataFromCallsTx = null;
 

@@ -1,4 +1,4 @@
-package com.lithium.integrations;
+package com.lithium.integrations.transformations;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -19,6 +19,9 @@ import org.mule.api.registry.RegistrationException;
 import org.mule.api.transformer.TransformerException;
 import org.mule.transformer.AbstractMessageTransformer;
 
+import com.lithium.integrations.AuthorInformation;
+import com.lithium.integrations.Avatar;
+import com.lithium.integrations.AuthorInformation.User;
 import com.lithium.integrations.AuthorInformation.User.Profiles;
 import com.lithium.integrations.AuthorInformation.User.Profiles.Profile;
 import com.lithium.integrations.model.AuthorAvatarCombined;
@@ -46,37 +49,41 @@ public class CombineDataFromCallsTx extends AbstractMessageTransformer {
 			authorAvatarCombined.setId(response.getUser().getId().getValue());
 			authorAvatarCombined.setLast_visit_time(response.getUser().getLastVisitTime().getValue().toString());
 			authorAvatarCombined.setLogin(response.getUser().getLogin().getValue());
+			authorAvatarCombined.setAverage_rating(response.getUser().getAverageRating().getValue());
+			authorAvatarCombined.setAverage_message_rating(response.getUser().getAverageMessageRating().getValue());
 
 			List<Profile> profile = response.getUser().getProfiles().profile;
 			for (int i = 0; i < profile.size(); i++) {
 				if (profile.get(i).getName().equalsIgnoreCase("accept_private_notes_consent_agreement"))
-					authorAvatarCombined.setHref(profile.get(i).getValue());
+					authorAvatarCombined.setAccept_private_notes_consent_agreement(profile.get(i).getValue());
 				if (profile.get(i).getName().equalsIgnoreCase("autosave_interval"))
-					authorAvatarCombined.setHref(profile.get(i).getValue());
+					authorAvatarCombined.setAutosave_interval(profile.get(i).getValue());
 				if (profile.get(i).getName().equalsIgnoreCase("badge.delivery_enable"))
-					authorAvatarCombined.setHref(profile.get(i).getValue());
+					authorAvatarCombined.setBadge_delivery_enable(profile.get(i).getValue());
 				if (profile.get(i).getName().equalsIgnoreCase("badge.email_delivery_freq"))
-					authorAvatarCombined.setHref(profile.get(i).getValue());
+					authorAvatarCombined.setBadge_email_delivery_freq(profile.get(i).getValue());
 				if (profile.get(i).getName().equalsIgnoreCase("biography"))
-					authorAvatarCombined.setHref(profile.get(i).getValue());
+					authorAvatarCombined.setBiography(profile.get(i).getValue());
 				if (profile.get(i).getName().equalsIgnoreCase("blogger_badge_orientation"))
-					authorAvatarCombined.setHref(profile.get(i).getValue());
+					authorAvatarCombined.setBlogger_badge_orientation(profile.get(i).getValue());
 				if (profile.get(i).getName().equalsIgnoreCase("blogger_badge_show_avatar"))
-					authorAvatarCombined.setHref(profile.get(i).getValue());
+					authorAvatarCombined.setBlogger_badge_show_avatar(profile.get(i).getValue());
 				if (profile.get(i).getName().equalsIgnoreCase("blogger_badge_show_blogs"))
-					authorAvatarCombined.setHref(profile.get(i).getValue());
+					authorAvatarCombined.setBlogger_badge_show_blogs(profile.get(i).getValue());
 				if (profile.get(i).getName().equalsIgnoreCase("blogger_badge_show_ideas"))
-					authorAvatarCombined.setHref(profile.get(i).getValue());
+					authorAvatarCombined.setBlogger_badge_show_ideas(profile.get(i).getValue());
 				if (profile.get(i).getName().equalsIgnoreCase("blogger_badge_show_kudos"))
-					authorAvatarCombined.setHref(profile.get(i).getValue());
+					authorAvatarCombined.setBlogger_badge_show_kudos(profile.get(i).getValue());
 				if (profile.get(i).getName().equalsIgnoreCase("blogger_badge_show_post_count"))
-					authorAvatarCombined.setHref(profile.get(i).getValue());
+					authorAvatarCombined.setBlogger_badge_show_post_count(profile.get(i).getValue());
 				if (profile.get(i).getName().equalsIgnoreCase("blogger_badge_show_rank"))
-					authorAvatarCombined.setHref(profile.get(i).getValue());
+					authorAvatarCombined.setBlogger_badge_show_rank(profile.get(i).getValue());
 				if (profile.get(i).getName().equalsIgnoreCase("board.delivery_enable"))
-					authorAvatarCombined.setHref(profile.get(i).getValue());
+					authorAvatarCombined.setBoard_delivery_enable(profile.get(i).getValue());
 				if (profile.get(i).getName().equalsIgnoreCase("board.sub_email_delivery_freq"))
-					authorAvatarCombined.setHref(profile.get(i).getValue());
+					authorAvatarCombined.setBoard_sub_email_delivery_freq(profile.get(i).getValue());
+				if (profile.get(i).getName().equalsIgnoreCase("blogger_badge_show_accepted_solutions"))
+					authorAvatarCombined.setBlogger_badge_show_accepted_solutions(profile.get(i).getValue());
 
 			}
 
@@ -94,6 +101,26 @@ public class CombineDataFromCallsTx extends AbstractMessageTransformer {
 
 		return authorAvatarCombined;
 
+	}
+
+	public static String wrapHtmlBody(String body) {
+		String output = "";
+
+		output += "<html>";
+		output += "<head>";
+		output += "<meta http-equiv=\"Content-Language\" content=\"en-us\"/>";
+		output += "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=windows-1252\"/>";
+		output += "<title>Lithium Connector Output Console</title>";
+		output += "</head>";
+
+		output += "<body link=\"#FFFFFF\" vlink=\"#FFFFFF\" alink=\"#FFFFFF\" bgcolor=\"#990000\" text=\"#FFFFFF\">";
+		output += body;
+		output += "</body>";
+
+		output += "<br/><a href=\"/li-client\">Return to Home Page</a>";
+		output += "</html>";
+
+		return output;
 	}
 
 	@SuppressWarnings("unchecked")

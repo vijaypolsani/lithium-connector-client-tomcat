@@ -7,10 +7,10 @@ public class AuthorAvatarCombined {
 	private String url;
 	//Author Profile
 	private String href;
-	private String average_message_rating;
+	private float average_message_rating;
+	private float average_rating;
 	private String login;
 	private String anonymous;
-	private String average_rating;
 	private String accept_private_notes_consent_agreement;
 	private String autosave_interval;
 	private String badge_delivery_enable;
@@ -47,10 +47,10 @@ public class AuthorAvatarCombined {
 	public void setHref(String href) {
 		this.href = href;
 	}
-	public String getAverage_message_rating() {
+	public float getAverage_message_rating() {
 		return average_message_rating;
 	}
-	public void setAverage_message_rating(String average_message_rating) {
+	public void setAverage_message_rating(float average_message_rating) {
 		this.average_message_rating = average_message_rating;
 	}
 	public String getLogin() {
@@ -65,10 +65,10 @@ public class AuthorAvatarCombined {
 	public void setAnonymous(String anonymous) {
 		this.anonymous = anonymous;
 	}
-	public String getAverage_rating() {
+	public float getAverage_rating() {
 		return average_rating;
 	}
-	public void setAverage_rating(String average_rating) {
+	public void setAverage_rating(float average_rating) {
 		this.average_rating = average_rating;
 	}
 	public String getAccept_private_notes_consent_agreement() {

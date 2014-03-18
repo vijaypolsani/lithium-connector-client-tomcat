@@ -973,7 +973,7 @@ public class AuthorInformation {
         })
         public static class Profiles {
 
-            protected List<AuthorInformation.User.Profiles.Profile> profile;
+            public List<AuthorInformation.User.Profiles.Profile> profile;
 
             /**
              * Gets the value of the profile property.

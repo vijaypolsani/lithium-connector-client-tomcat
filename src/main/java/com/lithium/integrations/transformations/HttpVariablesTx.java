@@ -1,4 +1,4 @@
-package com.lithium.integrations;
+package com.lithium.integrations.transformations;
 
 import java.util.Map;
 
@@ -15,6 +15,7 @@ public class HttpVariablesTx extends AbstractMessageTransformer {
 	@Override
 	public Object transformMessage(MuleMessage message, String outputEncoding) throws TransformerException {
 		try {
+			System.out.println("**** Message Payload Information Keys: " + message.getPayloadAsString());
 			inputParams = (Map<String, String>) message.getPayload();
 			System.out.println("**** Message Payload Information Keys: " + inputParams.keySet().toString());
 			System.out.println("**** Message Payload Information Values: " + inputParams.values().toString());

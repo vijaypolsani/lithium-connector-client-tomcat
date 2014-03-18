@@ -10,4 +10,27 @@
   <listener>
     <listener-class>org.mule.config.builders.MuleXmlBuilderContextListener</listener-class>
   </listener>
+<!-- 
+    <servlet>
+        <servlet-name>muleServlet</servlet-name>
+        <servlet-class>
+            org.mule.transport.servlet.MuleReceiverServlet
+        </servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+	 <servlet>
+	    <servlet-name>ajax</servlet-name>
+	    <servlet-class>org.mule.transport.ajax.container.MuleAjaxServlet</servlet-class>
+	    <load-on-startup>1</load-on-startup>
+	</servlet>
+
+    <servlet-mapping>
+        <servlet-name>muleServlet</servlet-name>
+        <url-pattern>/services/*</url-pattern>
+    </servlet-mapping>
+	<servlet-mapping>
+    	<servlet-name>ajax</servlet-name>
+    	<url-pattern>/ajax/*</url-pattern>
+	</servlet-mapping>
+ -->
 </web-app>

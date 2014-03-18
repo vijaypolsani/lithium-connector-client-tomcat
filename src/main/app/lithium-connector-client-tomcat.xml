@@ -18,19 +18,22 @@ http://www.mulesoft.org/schema/mule/vm http://www.mulesoft.org/schema/mule/vm/cu
 http://www.mulesoft.org/schema/mule/ajax http://www.mulesoft.org/schema/mule/ajax/current/mule-ajax.xsd
 http://www.mulesoft.org/schema/mule/xml http://www.mulesoft.org/schema/mule/xml/current/mule-xml.xsd
 http://www.mulesoft.org/schema/mule/servlet http://www.mulesoft.org/schema/mule/servlet/current/mule-servlet.xsd">
-    <Lithium:config name="Lithium" lithiumPassword="arfarf" lithiumUserName="admin" doc:name="Lithium">
+    <!-- <Lithium:config name="Lithium" lithiumPassword="${lithium.password}" lithiumUserName="${lithium.username}"  communityName = "${community.name}" doc:name="Lithium" communityHostname="${community.hostname}" >-->
+    <Lithium:config name="Lithium" lithiumPassword="arfarf" lithiumUserName="admin"   doc:name="Lithium" >
         <Lithium:connection-pooling-profile initialisationPolicy="INITIALISE_ONE" exhaustedAction="WHEN_EXHAUSTED_GROW"/>
     </Lithium:config>
-    <http:endpoint exchange-pattern="request-response" host="localhost" port="8081" path="lithium" method="POST" name="HTTP" doc:name="HTTP"/>
+    <!-- <http:endpoint exchange-pattern="request-response" host="localhost" port="${port}" path="lithium" method="POST" name="HTTP" doc:name="HTTP"/> -->
     <byte-array-to-object-transformer name="Byte_Array_to_Object" doc:name="Byte Array to Object"/>
     <byte-array-to-string-transformer name="Byte_Array_to_String" doc:name="Byte Array to String"/>
     <http:body-to-parameter-map-transformer name="Body_to_Parameter_Map" doc:name="Body to Parameter Map"/>
+    <object-to-string-transformer name="Object_to_String" doc:name="Object to String"/>
+    <http:endpoint exchange-pattern="request-response" host="localhost" port="8081" path="lithium" method="POST" name="HTTP" doc:name="HTTP"/>
     <flow name="lithium-connector-main" doc:name="lithium-connector-main" initialState="started" processingStrategy="synchronous">
-        <http:inbound-endpoint exchange-pattern="request-response"  doc:name="HTTP"  ref="HTTP" transformer-refs="Body_to_Parameter_Map" responseTransformer-refs="Byte_Array_to_String" contentType="application/json"/>
-        <custom-transformer class="com.lithium.integrations.HttpVariablesTx" doc:name="Tranform Variables"/>
+        <http:inbound-endpoint exchange-pattern="request-response"  ref="HTTP" doc:name="HTTP" responseTransformer-refs="Byte_Array_to_String" transformer-refs="Body_to_Parameter_Map"/>
+        <custom-transformer class="com.lithium.integrations.transformations.HttpVariablesTx" doc:name="Tranform Variables"/>
             <Lithium:post-blog-message config-ref="Lithium" boardIdOrBlogName="#[message.payload.boardname]" labels="#[message.payload.labels]" messageBody="#[message.payload.messageBody]" messageIsDraft="#[message.payload.messageIsDraft]" messageSubject="#[message.payload.messageSubject]" messageTeaser="#[message.payload.messageTeaser]" tagAdd="#[message.payload.tagAdd]" doc:name="Post Blog"/>
         <processor-chain doc:name="Processor Chain">
-            <Lithium:get-recent-topics config-ref="Lithium" doc:name="Get Recent Topics List" boardIdOrBlogName="#[app.registry.boardname]"/>
+            <Lithium:get-recent-topics config-ref="Lithium" boardIdOrBlogName="#[app.registry.boardname]" doc:name="Get Recent Topics List"/>
             <Lithium:get-topic-message config-ref="Lithium" doc:name="Get Topic Message"/>
             <all doc:name="All">
                 <processor-chain>
@@ -43,6 +46,6 @@ http://www.mulesoft.org/schema/mule/servlet http://www.mulesoft.org/schema/mule/
                 </processor-chain>
             </all>
         </processor-chain>
-        <custom-transformer class="com.lithium.integrations.CombineDataFromCallsTx" doc:name="Combine Author &amp; Avator"/>
+        <custom-transformer class="com.lithium.integrations.transformations.CombineDataFromCallsTx" doc:name="Combine Author &amp; Avator"/>
     </flow>
 </mule>
