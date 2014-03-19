@@ -10,11 +10,11 @@
   <listener>
     <listener-class>org.mule.config.builders.MuleXmlBuilderContextListener</listener-class>
   </listener>
-<!-- 
+
     <servlet>
         <servlet-name>muleServlet</servlet-name>
         <servlet-class>
-            org.mule.transport.servlet.MuleReceiverServlet
+            org.mule.transport.servlet.MuleRESTReceiverServlet
         </servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
@@ -32,5 +32,5 @@
     	<servlet-name>ajax</servlet-name>
     	<url-pattern>/ajax/*</url-pattern>
 	</servlet-mapping>
- -->
+
 </web-app>

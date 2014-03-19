@@ -15,10 +15,10 @@ public class HttpVariablesTx extends AbstractMessageTransformer {
 	@Override
 	public Object transformMessage(MuleMessage message, String outputEncoding) throws TransformerException {
 		try {
-			System.out.println("**** Message Payload Information Keys: " + message.getPayloadAsString());
+			//System.out.println("**** Message Payload Information Keys: " + message.getPayloadAsString());
 			inputParams = (Map<String, String>) message.getPayload();
-			System.out.println("**** Message Payload Information Keys: " + inputParams.keySet().toString());
-			System.out.println("**** Message Payload Information Values: " + inputParams.values().toString());
+			//System.out.println("**** Message Payload Information Keys: " + inputParams.keySet().toString());
+			//System.out.println("**** Message Payload Information Values: " + inputParams.values().toString());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

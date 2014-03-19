@@ -1,0 +1,20 @@
+<html>
+<head>
+<title>Mule Lithium Connector</title>
+<script type="text/javascript" src="mule-resource/js/mule.js"></script>
+<script type="text/javascript">
+
+	function messagesCallback(message) {
+		var disArea = document.getElementById('displayArea');
+		disArea.innerHTML = disArea.innerHTML + message.data+ "<br/>";
+		disArea.scrollTop = disArea.scrollHeight;
+	}
+</script>
+</head>
+<body onload="mule.subscribe('/result', messagesCallback);">
+	<H2 align = 'center' color = '#aaaaaa' >Author Profile Information of listed Topic Messages</H2>
+	<div id="displayArea"
+		style="position: absolute; left: 50px; top: 50px; width: 1000px; height: 650px; background-color: #eeeeee; overflow: auto;">
+	</div>
+</body>
+</html>

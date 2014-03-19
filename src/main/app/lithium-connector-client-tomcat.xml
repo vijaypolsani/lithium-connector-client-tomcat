@@ -28,25 +28,25 @@ http://www.mulesoft.org/schema/mule/servlet http://www.mulesoft.org/schema/mule/
     <http:body-to-parameter-map-transformer name="Body_to_Parameter_Map" doc:name="Body to Parameter Map"/>
     <object-to-string-transformer name="Object_to_String" doc:name="Object to String"/>
     <http:endpoint exchange-pattern="request-response" host="localhost" port="8081" path="lithium" method="POST" name="HTTP" doc:name="HTTP"/>
-    <string-to-byte-array-transformer name="String_to_Byte_Array" doc:name="String to Byte Array"/>
+    <string-to-byte-array-transformer name="String_to_Byte_Array" doc:name="String to Byte Array"/>    
+    <ajax:connector name="ajaxServer" serverUrl="http://0.0.0.0:8090/services/result" resourceBase="${app.home}/docroot"  doc:name="Ajax"/>
     <flow name="lithium-connector-main" doc:name="lithium-connector-main" initialState="started" processingStrategy="synchronous">
-        <http:inbound-endpoint exchange-pattern="request-response"  ref="HTTP" doc:name="HTTP"  transformer-refs="Body_to_Parameter_Map" contentType="text/html"/>
-        <custom-transformer class="com.lithium.integrations.transformations.HttpVariablesTx" doc:name="Tranform Variables"/>
-            <Lithium:post-blog-message config-ref="Lithium" boardIdOrBlogName="#[message.payload.boardname]" labels="#[message.payload.labels]" messageBody="#[message.payload.messageBody]" messageIsDraft="#[message.payload.messageIsDraft]" messageSubject="#[message.payload.messageSubject]" messageTeaser="#[message.payload.messageTeaser]" tagAdd="#[message.payload.tagAdd]" doc:name="Post Blog"/>
-        <processor-chain doc:name="Processor Chain">
-            <Lithium:get-recent-topics config-ref="Lithium" boardIdOrBlogName="#[app.registry.boardname]" doc:name="Get Recent Topics List"/>
-            <Lithium:get-topic-message config-ref="Lithium" doc:name="Get Topic Message"/>
-            <all doc:name="All">
-                <processor-chain>
-                    <Lithium:get-author config-ref="Lithium" doc:name="Get Author"/>
-                    <object-to-string-transformer doc:name="Object to String"/>
-                </processor-chain>
-                <processor-chain>
-                    <Lithium:get-author-avatar config-ref="Lithium" doc:name="Get Avatar"/>
-                    <object-to-string-transformer doc:name="Object to String"/>
-                </processor-chain>
-            </all>
+        <http:inbound-endpoint exchange-pattern="one-way"  ref="HTTP" doc:name="HTTP 8081/lithium"  transformer-refs="Body_to_Parameter_Map" contentType="text/html"/>
+        <custom-transformer class="com.lithium.integrations.transformations.HttpVariablesTx" doc:name="HTTP to Map"/>
+            <Lithium:post-blog-message config-ref="Lithium" boardIdOrBlogName="#[message.payload.boardname]" labels="#[message.payload.labels]" messageBody="#[message.payload.messageBody]" messageIsDraft="#[message.payload.messageIsDraft]" messageSubject="#[message.payload.messageSubject]" messageTeaser="#[message.payload.messageTeaser]" tagAdd="#[message.payload.tagAdd]" doc:name="Post Blog Message"/>
+        <processor-chain doc:name="Processor Chain: Get Operations">
+            <Lithium:get-recent-topics config-ref="Lithium" boardIdOrBlogName="#[app.registry.boardname]" doc:name="Get List of Recent Topics"/>
+            <custom-transformer class="com.lithium.integrations.transformations.PrepareMessageIdCollection" doc:name="Collection of Message Id"/>
+            <foreach doc:name="For Each: Iterate Over Message Id">
+                <Lithium:get-topic-message config-ref="Lithium" messageId="#[message.payload]" doc:name="Get a Topic Message"/>
+                <custom-transformer class="com.lithium.integrations.transformations.PrepareUserId" doc:name="Read User Id"/>
+                <all doc:name="All">
+                    <Lithium:get-author config-ref="Lithium" userId="#[message.payload]" doc:name="Get Author Profile"/>
+                    <Lithium:get-author-avatar config-ref="Lithium" userId="#[message.payload]" doc:name="Get Author Avatar"/>
+                </all>
+                <component class="com.lithium.integrations.transformations.CombineDataFromCallsTxHtml" doc:name="Combine Author &amp; Avatar To HTML"/>
+                <ajax:outbound-endpoint channel="/result" doc:name="Ajax"/>
+            </foreach>
         </processor-chain>
-        <custom-transformer class="com.lithium.integrations.transformations.CombineDataFromCallsTx" doc:name="Combine Author &amp; Avator"/>
     </flow>
 </mule>

@@ -6,14 +6,14 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.lithium.integrations.transformations.CombineDataFromCallsTx;
+import com.lithium.integrations.transformations.CombineDataFromCallsTxJson;
 
 public class CommbineDataFromCallsTxTest {
-	CombineDataFromCallsTx commbineDataFromCallsTx = null;
+	CombineDataFromCallsTxJson commbineDataFromCallsTx = null;
 
 	@Before
 	public void setUp() throws Exception {
-		commbineDataFromCallsTx = new CombineDataFromCallsTx();
+		commbineDataFromCallsTx = new CombineDataFromCallsTxJson();
 	}
 
 	@After
