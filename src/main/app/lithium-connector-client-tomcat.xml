@@ -28,8 +28,9 @@ http://www.mulesoft.org/schema/mule/servlet http://www.mulesoft.org/schema/mule/
     <http:body-to-parameter-map-transformer name="Body_to_Parameter_Map" doc:name="Body to Parameter Map"/>
     <object-to-string-transformer name="Object_to_String" doc:name="Object to String"/>
     <http:endpoint exchange-pattern="request-response" host="localhost" port="8081" path="lithium" method="POST" name="HTTP" doc:name="HTTP"/>
+    <string-to-byte-array-transformer name="String_to_Byte_Array" doc:name="String to Byte Array"/>
     <flow name="lithium-connector-main" doc:name="lithium-connector-main" initialState="started" processingStrategy="synchronous">
-        <http:inbound-endpoint exchange-pattern="request-response"  ref="HTTP" doc:name="HTTP" responseTransformer-refs="Byte_Array_to_String" transformer-refs="Body_to_Parameter_Map"/>
+        <http:inbound-endpoint exchange-pattern="request-response"  ref="HTTP" doc:name="HTTP"  transformer-refs="Body_to_Parameter_Map" contentType="text/html"/>
         <custom-transformer class="com.lithium.integrations.transformations.HttpVariablesTx" doc:name="Tranform Variables"/>
             <Lithium:post-blog-message config-ref="Lithium" boardIdOrBlogName="#[message.payload.boardname]" labels="#[message.payload.labels]" messageBody="#[message.payload.messageBody]" messageIsDraft="#[message.payload.messageIsDraft]" messageSubject="#[message.payload.messageSubject]" messageTeaser="#[message.payload.messageTeaser]" tagAdd="#[message.payload.tagAdd]" doc:name="Post Blog"/>
         <processor-chain doc:name="Processor Chain">
