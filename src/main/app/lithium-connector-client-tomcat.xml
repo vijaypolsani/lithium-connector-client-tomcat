@@ -39,13 +39,15 @@ http://www.mulesoft.org/schema/mule/servlet http://www.mulesoft.org/schema/mule/
             <custom-transformer class="com.lithium.integrations.transformations.PrepareMessageIdCollection" doc:name="Collection of Message Id"/>
             <foreach doc:name="For Each: Iterate Over Message Id">
                 <Lithium:get-topic-message config-ref="Lithium" messageId="#[message.payload]" doc:name="Get a Topic Message"/>
-                <custom-transformer class="com.lithium.integrations.transformations.PrepareUserId" doc:name="Read User Id"/>
+                <custom-transformer class="com.lithium.integrations.transformations.PrepareUserId" doc:name="Extract User Id"/>
                 <all doc:name="All">
                     <Lithium:get-author config-ref="Lithium" userId="#[message.payload]" doc:name="Get Author Profile"/>
                     <Lithium:get-author-avatar config-ref="Lithium" userId="#[message.payload]" doc:name="Get Author Avatar"/>
+                    <Lithium:get-author-solutions-received-count config-ref="Lithium" doc:name="Get Author Solutions"/>
+                    <Lithium:get-author-ranking config-ref="Lithium" doc:name="Get Author Ranking"/>
                 </all>
-                <component class="com.lithium.integrations.transformations.CombineDataFromCallsTxHtml" doc:name="Combine Author &amp; Avatar To HTML"/>
-                <ajax:outbound-endpoint channel="/result" doc:name="Ajax"/>
+                <component class="com.lithium.integrations.transformations.CombineDataFromCallsTxHtml" doc:name="Combine To HTML"/>
+                <ajax:outbound-endpoint channel="/result" doc:name="Ajax 8090/services/result"/>
             </foreach>
         </processor-chain>
     </flow>

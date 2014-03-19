@@ -29,7 +29,7 @@ import com.lithium.integrations.RecentTopics;
 import com.lithium.integrations.RecentTopics.Messages;
 import com.lithium.integrations.RecentTopics.Messages.Message;
 import com.lithium.integrations.TopicMessage;
-import com.lithium.integrations.model.AuthorAvatarCombined;
+import com.lithium.integrations.model.AuthorProfileCombined;
 
 public class PrepareUserId extends AbstractMessageTransformer {
 	Map<String, String> inputParams;

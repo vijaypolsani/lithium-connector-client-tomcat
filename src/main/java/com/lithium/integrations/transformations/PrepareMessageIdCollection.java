@@ -28,7 +28,7 @@ import com.lithium.integrations.AuthorInformation.User.Profiles.Profile;
 import com.lithium.integrations.RecentTopics;
 import com.lithium.integrations.RecentTopics.Messages;
 import com.lithium.integrations.RecentTopics.Messages.Message;
-import com.lithium.integrations.model.AuthorAvatarCombined;
+import com.lithium.integrations.model.AuthorProfileCombined;
 
 public class PrepareMessageIdCollection extends AbstractMessageTransformer {
 	Map<String, String> inputParams;

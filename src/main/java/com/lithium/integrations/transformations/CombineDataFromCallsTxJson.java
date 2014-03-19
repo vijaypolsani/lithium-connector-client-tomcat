@@ -21,18 +21,18 @@ import org.mule.transformer.AbstractMessageTransformer;
 import com.lithium.integrations.AuthorInformation;
 import com.lithium.integrations.Avatar;
 import com.lithium.integrations.AuthorInformation.User.Profiles.Profile;
-import com.lithium.integrations.model.AuthorAvatarCombined;
+import com.lithium.integrations.model.AuthorProfileCombined;
 
 public class CombineDataFromCallsTxJson extends AbstractMessageTransformer {
 	Map<String, String> inputParams;
 	ObjectMapper mapper = new ObjectMapper();
 
-	public AuthorAvatarCombined parseJsonBuildAuthor(String jsonStringAuthor, String jsonStringAvator) {
+	public AuthorProfileCombined parseJsonBuildAuthor(String jsonStringAuthor, String jsonStringAvator) {
 		//mapper.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		//Response authroResponse = mapper.readValue(jsonStringAvator, Response.class);
 		JAXBContext jaxbContextAuthor;
 		JAXBContext jaxbContextAvatar;
-		AuthorAvatarCombined authorAvatarCombined = new AuthorAvatarCombined();
+		AuthorProfileCombined authorAvatarCombined = new AuthorProfileCombined();
 		try {
 			jaxbContextAuthor = JAXBContext.newInstance(AuthorInformation.class);
 			Unmarshaller jaxbUnmarshallerAuthor = jaxbContextAuthor.createUnmarshaller();
@@ -104,7 +104,7 @@ public class CombineDataFromCallsTxJson extends AbstractMessageTransformer {
 			List list = (List) message.getPayload();
 			//System.out.println("**** Data 1:" + list.get(0).toString().trim());
 			//System.out.println("**** Data 2:" + list.get(1).toString().trim());
-			AuthorAvatarCombined authorAvatarCombined = parseJsonBuildAuthor((String) list.get(0), (String) list.get(1));
+			AuthorProfileCombined authorAvatarCombined = parseJsonBuildAuthor((String) list.get(0), (String) list.get(1));
 			//message.setPayload(wrapHtmlBody(authorAvatarCombined));
 			//Use this for JSON output...
 			message.setPayload(mapper.writeValueAsString(authorAvatarCombined));

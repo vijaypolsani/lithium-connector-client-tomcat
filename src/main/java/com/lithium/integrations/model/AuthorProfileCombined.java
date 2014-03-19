@@ -1,6 +1,6 @@
 package com.lithium.integrations.model;
 
-public class AuthorAvatarCombined {
+public class AuthorProfileCombined {
 
 	//Avatart Info
 	private String image;
@@ -30,6 +30,35 @@ public class AuthorAvatarCombined {
 	private int id;
 	private String last_visit_time;
 	private String registration_time;
+	//Solutions
+	private String solutionsReceivedCount;
+	//Rankings
+	private String authorRankingRole;
+	private int authorRanking;
+
+	public String getAuthorRankingRole() {
+		return authorRankingRole;
+	}
+
+	public void setAuthorRankingRole(String authorRankingRole) {
+		this.authorRankingRole = authorRankingRole;
+	}
+
+	public int getAuthorRanking() {
+		return authorRanking;
+	}
+
+	public void setAuthorRanking(int b) {
+		this.authorRanking = b;
+	}
+
+	public String getSolutionsReceivedCount() {
+		return solutionsReceivedCount;
+	}
+
+	public void setSolutionsReceivedCount(String solutionsReceivedCount) {
+		this.solutionsReceivedCount = solutionsReceivedCount;
+	}
 
 	public String getEmail() {
 		return email;
