@@ -19,7 +19,7 @@ http://www.mulesoft.org/schema/mule/ajax http://www.mulesoft.org/schema/mule/aja
 http://www.mulesoft.org/schema/mule/xml http://www.mulesoft.org/schema/mule/xml/current/mule-xml.xsd
 http://www.mulesoft.org/schema/mule/servlet http://www.mulesoft.org/schema/mule/servlet/current/mule-servlet.xsd">
     <!-- <Lithium:config name="Lithium" lithiumPassword="${lithium.password}" lithiumUserName="${lithium.username}"  communityName = "${community.name}" doc:name="Lithium" communityHostname="${community.hostname}" >-->
-    <Lithium:config name="Lithium" lithiumPassword="arfarf" lithiumUserName="admin"   doc:name="Lithium" >
+    <Lithium:config name="Lithium" lithiumPassword="arfarf" lithiumUserName="admin"  communityHostname="ldn.qa.lithium.com" doc:name="Lithium" >
         <Lithium:connection-pooling-profile initialisationPolicy="INITIALISE_ONE" exhaustedAction="WHEN_EXHAUSTED_GROW"/>
     </Lithium:config>
     <!-- <http:endpoint exchange-pattern="request-response" host="localhost" port="${port}" path="lithium" method="POST" name="HTTP" doc:name="HTTP"/> -->
@@ -27,9 +27,9 @@ http://www.mulesoft.org/schema/mule/servlet http://www.mulesoft.org/schema/mule/
     <byte-array-to-string-transformer name="Byte_Array_to_String" doc:name="Byte Array to String"/>
     <http:body-to-parameter-map-transformer name="Body_to_Parameter_Map" doc:name="Body to Parameter Map"/>
     <object-to-string-transformer name="Object_to_String" doc:name="Object to String"/>
-    <http:endpoint exchange-pattern="request-response" host="localhost" port="8081" path="lithium" method="POST" name="HTTP" doc:name="HTTP"/>
+    <http:endpoint exchange-pattern="request-response" host="0.0.0.0" port="8081" path="lithium" method="POST" name="HTTP" doc:name="HTTP"/>
     <string-to-byte-array-transformer name="String_to_Byte_Array" doc:name="String to Byte Array"/>    
-    <ajax:connector name="ajaxServer" serverUrl="http://0.0.0.0:8090/services/result" resourceBase="${app.home}/docroot"  doc:name="Ajax"/>
+    <ajax:connector name="ajaxServer" serverUrl="http://0.0.0.0:8090/li-client/services/result" resourceBase="/Users/vijay.polsani/_muleworkspace/ithium-connector-client-tomcat/src/main/webapp/docroot"  doc:name="Ajax"/>
     <flow name="lithium-connector-main" doc:name="lithium-connector-main" initialState="started" processingStrategy="synchronous">
         <http:inbound-endpoint exchange-pattern="one-way"  ref="HTTP" doc:name="HTTP 8081/lithium"  transformer-refs="Body_to_Parameter_Map" contentType="text/html"/>
         <custom-transformer class="com.lithium.integrations.transformations.HttpVariablesTx" doc:name="HTTP to Map"/>
