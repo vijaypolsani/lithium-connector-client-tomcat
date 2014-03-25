@@ -1,37 +1,24 @@
 package com.lithium.integrations.transformations;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
-import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.JsonProcessingException;
-import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.mule.api.MuleContext;
 import org.mule.api.MuleMessage;
-import org.mule.api.registry.RegistrationException;
 import org.mule.api.transformer.TransformerException;
 import org.mule.transformer.AbstractMessageTransformer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import com.lithium.integrations.AuthorInformation;
-import com.lithium.integrations.Avatar;
-import com.lithium.integrations.AuthorInformation.User;
-import com.lithium.integrations.AuthorInformation.User.Profiles;
-import com.lithium.integrations.AuthorInformation.User.Profiles.Profile;
-import com.lithium.integrations.RecentTopics;
-import com.lithium.integrations.RecentTopics.Messages;
-import com.lithium.integrations.RecentTopics.Messages.Message;
 import com.lithium.integrations.TopicMessage;
-import com.lithium.integrations.model.AuthorProfileCombined;
 
 public class PrepareUserId extends AbstractMessageTransformer {
+	public static Logger log = LoggerFactory.getLogger(PrepareUserId.class);
+
 	Map<String, String> inputParams;
 	ObjectMapper mapper = new ObjectMapper();
 
@@ -53,8 +40,8 @@ public class PrepareUserId extends AbstractMessageTransformer {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("**** userId Parsed :" + userIdHref.substring(userIdHref.lastIndexOf('/')+1));
-		return userIdHref.substring(userIdHref.lastIndexOf('/')+1);
+		log.debug("*** UserId Parsed from Message :" + userIdHref.substring(userIdHref.lastIndexOf('/') + 1));
+		return userIdHref.substring(userIdHref.lastIndexOf('/') + 1);
 
 	}
 

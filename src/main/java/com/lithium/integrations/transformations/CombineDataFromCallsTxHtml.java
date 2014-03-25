@@ -17,6 +17,8 @@ import org.mule.api.MuleMessage;
 import org.mule.api.registry.RegistrationException;
 import org.mule.api.transformer.TransformerException;
 import org.mule.transformer.AbstractMessageTransformer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lithium.integrations.AuthorInformation;
 import com.lithium.integrations.Avatar;
@@ -26,6 +28,8 @@ import com.lithium.integrations.model.AuthorProfileCombined;
 import com.lithium.integrations.model.Solutions;
 
 public class CombineDataFromCallsTxHtml extends AbstractMessageTransformer {
+	public static Logger log = LoggerFactory.getLogger(CombineDataFromCallsTxHtml.class);
+
 	Map<String, String> inputParams;
 	ObjectMapper mapper = new ObjectMapper();
 
@@ -188,8 +192,6 @@ public class CombineDataFromCallsTxHtml extends AbstractMessageTransformer {
 	public Object transformMessage(MuleMessage message, String outputEncoding) throws TransformerException {
 		try {
 			List list = (List) message.getPayload();
-			//System.out.println("**** Data 1:" + list.get(0).toString().trim());
-			//System.out.println("**** Data 2:" + list.get(1).toString().trim());
 			AuthorProfileCombined authorProfileCombined = parseJsonBuildAuthor((String) list.get(0),
 					(String) list.get(1), (String) list.get(2), (String) list.get(3));
 			message.setPayload(wrapHtmlBody(authorProfileCombined));

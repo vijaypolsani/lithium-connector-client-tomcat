@@ -19,6 +19,8 @@ import org.mule.api.MuleMessage;
 import org.mule.api.registry.RegistrationException;
 import org.mule.api.transformer.TransformerException;
 import org.mule.transformer.AbstractMessageTransformer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lithium.integrations.AuthorInformation;
 import com.lithium.integrations.Avatar;
@@ -31,6 +33,7 @@ import com.lithium.integrations.RecentTopics.Messages.Message;
 import com.lithium.integrations.model.AuthorProfileCombined;
 
 public class PrepareMessageIdCollection extends AbstractMessageTransformer {
+	public static Logger log = LoggerFactory.getLogger(PrepareMessageIdCollection.class);
 	Map<String, String> inputParams;
 	ObjectMapper mapper = new ObjectMapper();
 
@@ -53,7 +56,7 @@ public class PrepareMessageIdCollection extends AbstractMessageTransformer {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("List of Message Ids: " + messageIds);
+		log.debug("List of Message Ids: " + messageIds);
 		return messageIds;
 	}
 
@@ -61,7 +64,7 @@ public class PrepareMessageIdCollection extends AbstractMessageTransformer {
 	@Override
 	public Object transformMessage(MuleMessage message, String outputEncoding) throws TransformerException {
 		try {
-			//System.out.println("**** Input Message Data :" + message.getPayloadAsString());
+			//log.debug("**** Input Message Data :" + message.getPayloadAsString());
 			message.setPayload(prepareMessageIdList(message.getPayloadAsString()));
 			//Use this for JSON output...
 			//message.setPayload(mapper.writeValueAsString(authorAvatarCombined));

@@ -447,5 +447,5 @@
 			</snapshots>
 		</pluginRepository>
 	</pluginRepositories>
-	<packaging>war</packaging>
+	<packaging>mule</packaging>
 </project>

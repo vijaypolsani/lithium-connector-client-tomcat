@@ -7,18 +7,21 @@ import org.mule.api.MuleMessage;
 import org.mule.api.registry.RegistrationException;
 import org.mule.api.transformer.TransformerException;
 import org.mule.transformer.AbstractMessageTransformer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class HttpVariablesTx extends AbstractMessageTransformer {
+	public static Logger log = LoggerFactory.getLogger(HttpVariablesTx.class);
 	Map<String, String> inputParams;
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public Object transformMessage(MuleMessage message, String outputEncoding) throws TransformerException {
 		try {
-			//System.out.println("**** Message Payload Information Keys: " + message.getPayloadAsString());
+			//logger.debug("**** Message Payload Information Keys: " + message.getPayloadAsString());
 			inputParams = (Map<String, String>) message.getPayload();
-			//System.out.println("**** Message Payload Information Keys: " + inputParams.keySet().toString());
-			//System.out.println("**** Message Payload Information Values: " + inputParams.values().toString());
+			//logger.debug("**** Message Payload Information Keys: " + inputParams.keySet().toString());
+			//logger.debug("**** Message Payload Information Values: " + inputParams.values().toString());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
