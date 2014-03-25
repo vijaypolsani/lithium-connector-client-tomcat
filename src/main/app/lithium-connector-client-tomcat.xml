@@ -19,7 +19,7 @@ http://www.mulesoft.org/schema/mule/ajax http://www.mulesoft.org/schema/mule/aja
 http://www.mulesoft.org/schema/mule/xml http://www.mulesoft.org/schema/mule/xml/current/mule-xml.xsd
 http://www.mulesoft.org/schema/mule/servlet http://www.mulesoft.org/schema/mule/servlet/current/mule-servlet.xsd">
     <!-- <Lithium:config name="Lithium" lithiumPassword="${lithium.password}" lithiumUserName="${lithium.username}"  communityName = "${community.name}" doc:name="Lithium" communityHostname="${community.hostname}" >-->
-    <Lithium:config name="Lithium" lithiumPassword="arfarf" lithiumUserName="admin"  communityHostname="ldn.qa.lithium.com" doc:name="Lithium" >
+    <Lithium:config name="Lithium" lithiumPassword="" lithiumUserName=""  communityHostname="ldn.qa.lithium.com" doc:name="Lithium" >
         <Lithium:connection-pooling-profile initialisationPolicy="INITIALISE_ONE" exhaustedAction="WHEN_EXHAUSTED_GROW"/>
     </Lithium:config>
     <!-- <http:endpoint exchange-pattern="request-response" host="localhost" port="${port}" path="lithium" method="POST" name="HTTP" doc:name="HTTP"/> -->
